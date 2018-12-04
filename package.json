@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/nightmarelie/request-trap-app#readme",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "express-hbs": "^1.0.4"
   }
 }
