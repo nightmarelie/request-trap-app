@@ -12,6 +12,7 @@ app.set('views', relative(__dirname, 'views'));
 
 app.use(express.static(relative(__dirname, 'public')));
 app.use(require(relative(__dirname, 'middlewares/request-time')));
+app.use(require(relative(__dirname, 'middlewares/ignore-favicon')));
 app.use(require(relative(__dirname, 'controllers/requests')));
 
 app.listen(port, () => console.log('Capture request!'));
