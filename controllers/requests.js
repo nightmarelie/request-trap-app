@@ -2,7 +2,9 @@ const express = require('express'),
       router = express.Router();
 
 router.get('/', (req, res) => {
-    res.render('request/instruction', {});
+    res.render('request/instruction', {
+        title: "Instructions"
+    });
 });
 
 router.all('/:trap_id', (req, res) => {
@@ -11,8 +13,10 @@ router.all('/:trap_id', (req, res) => {
 });
 
 router.get('/:trap_id/requests', (req, res) => {
+    const trapId = req.params.trap_id;
     res.render('request/details', {
-        trap: req.params.trap_id
+        title: `Request ${trapId} details`,
+        trap: trapId
     });
 });
 
