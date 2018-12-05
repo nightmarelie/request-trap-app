@@ -1,4 +1,27 @@
 {{#contentFor 'body'}}
     <h1>Request</h1>
     <div>{{trap}}</div>
+    {{#each requests}}
+    <ul>
+        <li>{{date}}</li>
+        <li>{{method}}</li>
+        <li>{{scheme}}</li>
+        <li>{{query}}</li>
+        <li>
+            <ul>
+            {{#each params}}
+                <li>{{key}}: {{value}}</li>
+            {{/each}}
+            </ul>
+        </li>
+        <li>{{cookie}}</li>
+        <li>
+            <ul>
+            {{#each headers}}
+                <li>{{key}}: {{value}}</li>
+            {{/each}}
+            </ul>
+        </li>
+    </ul>
+    {{/each}}
 {{/contentFor}}

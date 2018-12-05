@@ -21,10 +21,16 @@ router.all('/:trap_id', (req, res) => {
 
 router.get('/:trap_id/requests', (req, res) => {
     const { params: { trap_id: trapId } } = req;
-    res.render('request/details', {
-        title: `Request ${trapId} details`,
-        trap: trapId
-    });
+
+    requestModel.find({ trapId })
+        .sort('-date')
+        .exec()
+        .then(result => res.render('request/details', {
+            title: `Request ${trapId} details`,
+            trap: trapId,
+            requests: result
+        }))
+        .catch(console.error);
 });
 
 module.exports = router;
