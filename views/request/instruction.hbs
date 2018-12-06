@@ -1,3 +1,8 @@
 {{#contentFor 'body'}}
-    <h1>Instruction</h1>
+    <h1>Instruction:</h1>
+    <ul>
+        {{#each trapRequests}}
+            <li>{{{link _id href="/requests"}}} count: {{count}}</li>
+        {{/each}}
+    </ul>
 {{/contentFor}}

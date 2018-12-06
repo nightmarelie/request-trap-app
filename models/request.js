@@ -10,9 +10,9 @@ const requestSchema = new db.Schema({
     method: String,
     scheme: String,
     query: String,
-    params: [{key: String, value: String}],
+    params: [ { key: String, value: String } ],
     cookie: String,
-    headers: [{key: String, value: String}]
+    headers: [ { key: String, value: String } ]
 });
 
 module.exports = db.model('request', requestSchema);

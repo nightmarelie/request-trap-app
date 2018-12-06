@@ -2,7 +2,10 @@ const express = require('express'),
       app = express(),
       port = 3000,
       hbs = require('express-hbs');
-      relative = require('./helpers/relative');
+      relative = require('./helpers/relative'),
+      linkHelper = require('./views/helpers/link')(hbs);
+
+hbs.registerHelper('link', linkHelper);
 
 app.engine('hbs', hbs.express4({
     defaultLayout: relative(__dirname, 'views/template.hbs')

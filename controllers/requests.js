@@ -4,9 +4,20 @@ const express = require('express'),
       requestModel = require('../models/request');
 
 router.get('/', (req, res) => {
-    res.render('request/instruction', {
-        title: "Instructions"
-    });
+    requestModel.aggregate([
+            {
+                $group: {
+                    _id: '$trapId',
+                    count: { $sum: 1 }
+                }
+            }
+        ])
+        .exec()
+        .then(result => res.render('request/instruction', {
+            title: "Instructions",
+            trapRequests: result
+        }))
+        .catch(err => res.end(err.message));
 });
 
 router.all('/:trap_id', (req, res) => {
@@ -16,7 +27,7 @@ router.all('/:trap_id', (req, res) => {
 
         console.log(req);
     });
-    res.end('Handled');
+    res.end();
 });
 
 router.get('/:trap_id/requests', (req, res) => {
@@ -30,7 +41,7 @@ router.get('/:trap_id/requests', (req, res) => {
             trap: trapId,
             requests: result
         }))
-        .catch(console.error);
+        .catch(err => res.end(err.message));
 });
 
 module.exports = router;

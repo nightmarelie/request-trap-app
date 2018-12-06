@@ -1,21 +1,23 @@
 {{#contentFor 'body'}}
-    <h1>Request</h1>
-    <div>{{trap}}</div>
+    <h1>Request: "{{trap}}"</h1>
     {{#each requests}}
     <ul>
-        <li>{{date}}</li>
-        <li>{{method}}</li>
-        <li>{{scheme}}</li>
-        <li>{{query}}</li>
+        <li>Request date: {{date}}</li>
+        <li>Remote ip: {{ip}}</li>
+        <li>Request-method: {{method}}</li>
+        <li>Scheme: {{scheme}}</li>
+        <li>Query-string: {{query}}</li>
         <li>
+            Query-params:
             <ul>
             {{#each params}}
                 <li>{{key}}: {{value}}</li>
             {{/each}}
             </ul>
         </li>
-        <li>{{cookie}}</li>
+        <li>Cookies: {{cookie}}</li>
         <li>
+            Headers:
             <ul>
             {{#each headers}}
                 <li>{{key}}: {{value}}</li>
