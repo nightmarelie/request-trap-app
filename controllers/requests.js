@@ -4,15 +4,7 @@ const express = require('express'),
       requestModel = require('../models/request');
 
 router.get('/', (req, res) => {
-    requestModel.aggregate([
-            {
-                $group: {
-                    _id: '$trapId',
-                    count: { $sum: 1 }
-                }
-            }
-        ])
-        .exec()
+    requestModel.findAllRequests()
         .then(result => res.render('request/instruction', {
             title: "Instructions",
             trapRequests: result
@@ -33,9 +25,7 @@ router.all('/:trap_id', (req, res) => {
 router.get('/:trap_id/requests', (req, res) => {
     const { params: { trap_id: trapId } } = req;
 
-    requestModel.find({ trapId })
-        .sort('-date')
-        .exec()
+    requestModel.findByTrapId(trapId)
         .then(result => res.render('request/details', {
             title: `Request ${trapId} details`,
             trap: trapId,

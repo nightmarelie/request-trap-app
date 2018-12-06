@@ -15,4 +15,20 @@ const requestSchema = new db.Schema({
     headers: [ { key: String, value: String } ]
 });
 
+requestSchema.statics.findByTrapId = function(trapId, cb) {
+    return this.find({ trapId }, cb).sort('-date').exec();
+};
+
+requestSchema.statics.findAllRequests = function(cb) {
+    return this.aggregate([
+        {
+            $group: {
+                _id: '$trapId',
+                count: { $sum: 1 }
+            }
+        }
+    ], cb)
+    .exec();
+};
+
 module.exports = db.model('request', requestSchema);
