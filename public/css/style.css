@@ -22,3 +22,8 @@
     color: #fff;
     background-color: #17a2b8;
 }
+#success-alert {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
