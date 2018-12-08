@@ -14,12 +14,12 @@ router.get('/', (req, res) => {
 
 router.all('/:trap_id', (req, res) => {
     const request = new requestModel(extractor(req));
-    request.save(function (err, req) {
-        if (err) console.error(err);
-
-        console.log(req);
-    });
-    res.end();
+    request.save()
+        .then(result => {
+            console.log(result);
+            res.sendStatus(200);
+        })
+        .catch(err => res.status(500).send(err.message));
 });
 
 router.get('/:trap_id/requests', (req, res) => {
