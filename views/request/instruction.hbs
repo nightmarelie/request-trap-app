@@ -1,3 +1,7 @@
+{{#contentFor 'pageNav'}}
+    <li class="breadcrumb-item active" aria-current="page">Home</li>
+{{/contentFor}}
+
 {{#contentFor 'pageScripts'}}
     <script>
         // TODO: add handler
@@ -5,10 +9,15 @@
 {{/contentFor}}
 
 {{#contentFor 'body'}}
-    <h1>Instruction:</h1>
-    <ul>
-        {{#each trapRequests}}
-            <li>{{{link _id href="/requests"}}} count: {{count}}</li>
-        {{/each}}
-    </ul>
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <h2>Instruction:</h2>
+        <ul class="list-group">
+            {{#each trapRequests}}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{{link _id href="/requests"}}}
+                <span class="badge badge-dark">{{count}}</span>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
 {{/contentFor}}

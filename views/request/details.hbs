@@ -1,35 +1,104 @@
+{{#contentFor 'pageNav'}}
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{trap}}</li>
+{{/contentFor}}
+
 {{#contentFor 'pageScripts'}}
     <script>
         // TODO: add handler
     </script>
 {{/contentFor}}
 
+{{#contentFor 'pageStyles'}}
+    <style>
+        .table-condensed {
+            font-size: 14px;
+        }
+        .badge.GET {
+            color: #fff;
+            background-color: #28a745;
+        }
+        .badge.POST {
+            color: #fff;
+            background-color: #ffc107;
+        }
+        .badge.DELETE {
+            color: #fff;
+            background-color:#dc3545;
+        }
+        .badge.PATCH {
+            color: #fff;
+            background-color: #6c757d;
+        }
+        .badge.PUT {
+            color: #fff;
+            background-color: #007bff;
+        }
+        .badge.HEAD {
+            color: #fff;
+            background-color: #17a2b8;
+        }
+    </style>
+{{/contentFor}}
+
 {{#contentFor 'body'}}
-    <h1>Request: "{{trap}}"</h1>
-    {{#each requests}}
-    <ul>
-        <li>Request date: {{date}}</li>
-        <li>Remote ip: {{ip}}</li>
-        <li>Request-method: {{method}}</li>
-        <li>Scheme: {{scheme}}</li>
-        <li>Query-string: {{query}}</li>
-        <li>
-            Query-params:
-            <ul>
-            {{#each params}}
-                <li>{{key}}: {{value}}</li>
-            {{/each}}
-            </ul>
-        </li>
-        <li>Cookies: {{cookie}}</li>
-        <li>
-            Headers:
-            <ul>
-            {{#each headers}}
-                <li>{{key}}: {{value}}</li>
-            {{/each}}
-            </ul>
-        </li>
-    </ul>
-    {{/each}}
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <h1>Request: "{{trap}}"</h1>
+        {{#each requests}}
+        <table class="table table-bordered table-dark table-condensed">
+            <thead>
+                <tr>
+                    <th scope="col">Key</th>
+                    <th scope="col">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Request date</td>
+                    <td>{{date}}</td>
+                </tr>
+                <tr>
+                    <td>Remote ip</td>
+                    <td>{{ip}}</td>
+                </tr>
+                <tr>
+                    <td>Request-method</td>
+                    <td><span class="badge {{method}}">{{method}}</span></td>
+                </tr>
+                <tr>
+                    <td>Scheme</td>
+                    <td>{{scheme}}</td>
+                </tr>
+                <tr>
+                    <td>Query-string</td>
+                    <td>{{query}}</td>
+                </tr>
+                <tr>
+                    <td>Query-params</td>
+                    <td>
+                        <ul class="list-unstyled">
+                        {{#each params}}
+                            <li><strong>{{key}}:</strong> {{value}}</li>
+                        {{/each}}
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cookies</td>
+                    <td>{{cookie}}</td>
+                </tr>
+                <tr>
+                    <td>Headers</td>
+                    <td>
+                        <ul class="list-unstyled">
+                        {{#each headers}}
+                            <li><strong>{{key}}:</strong> {{value}}</li>
+                        {{/each}}
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {{/each}}
+    </div>
 {{/contentFor}}
