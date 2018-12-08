@@ -8,6 +8,7 @@ const express = require('express'),
 hbs.registerHelper('link', linkHelper);
 
 app.engine('hbs', hbs.express4({
+    partialsDir: relative('views/partials'),
     defaultLayout: relative(__dirname, 'views/template.hbs')
 }));
 app.set('view engine', 'hbs');
