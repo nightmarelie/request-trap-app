@@ -5,7 +5,50 @@
 
 {{#contentFor 'pageScripts'}}
     <script>
-        // TODO: add handler
+        $(document).ready(function () {
+            const mapRequest = new Map([
+                ["date", "Request date"], 
+                ["ip", "Remote ip"],
+                ["method", "Request-method"],
+                ["scheme", "Scheme"],
+                ["query", "Query-string	"],
+                ["params", "Query-params"],
+                ["cookie", "Cookies"],
+                ["headers", "Headers"]
+            ]);
+
+            function createRequest(request) {
+                $('div.request-container').find('h1').after(
+                    $("<table />")
+                    .addClass("table table-bordered table-dark table-condensed")
+                    .append($("<tbody />").append(() => {
+                        const trs = [];
+
+                        for (let [key, value] of Object.entries(request)) {
+                            const keyTD = $("<td/ >").text(mapRequest.get(key));
+                            const valueTD = $("<td/ >");
+                            
+                            if (value instanceof Array) {
+                                valueTD.append($("<ul />").addClass("list-unstyled").append(() => {
+                                    const lis = [];
+                                    for (let {key: k, value: v} of value) 
+                                        lis.push($("<li />").append([$("<strong />").text(`${k}:`), " ", v]));
+                                    return lis;
+                                }));
+                            } else if (key === 'method') {
+                                valueTD.append($("<span />").addClass(`badge ${value}`).text(value))
+                            } else {
+                                valueTD.text(value);
+                            }
+
+                            trs.push($("<tr />").append([keyTD, valueTD]))
+                        }
+
+                        return trs;
+                    }))
+                );
+            }
+        });
     </script>
 {{/contentFor}}
 
@@ -18,53 +61,30 @@
 {{/contentFor}}
 
 {{#contentFor 'body'}}
-    <div class="my-3 p-3 bg-white rounded shadow-sm">
+    <div class="request-container my-3 p-3 bg-white rounded shadow-sm">
         <h1>Request: "{{trap}}"</h1>
         {{#each requests}}
         <table class="table table-bordered table-dark table-condensed">
             <tbody>
-                <tr>
-                    <td>Request date</td>
-                    <td>{{date}}</td>
-                </tr>
-                <tr>
-                    <td>Remote ip</td>
-                    <td>{{ip}}</td>
-                </tr>
+                {{> request-tr key="Request date" value=date}}
+                {{> request-tr key="Remote ip" value=ip}}
                 <tr>
                     <td>Request-method</td>
                     <td><span class="badge {{method}}">{{method}}</span></td>
                 </tr>
-                <tr>
-                    <td>Scheme</td>
-                    <td>{{scheme}}</td>
-                </tr>
-                <tr>
-                    <td>Query-string</td>
-                    <td>{{query}}</td>
-                </tr>
+                {{> request-tr key="Scheme" value=scheme}}
+                {{> request-tr key="Query-string" value=query}}
                 <tr>
                     <td>Query-params</td>
                     <td>
-                        <ul class="list-unstyled">
-                        {{#each params}}
-                            <li><strong>{{key}}:</strong> {{value}}</li>
-                        {{/each}}
-                        </ul>
+                        {{> key-value context=params }}
                     </td>
                 </tr>
-                <tr>
-                    <td>Cookies</td>
-                    <td>{{cookie}}</td>
-                </tr>
+                {{> request-tr key="Cookies" value=cookie}}
                 <tr>
                     <td>Headers</td>
                     <td>
-                        <ul class="list-unstyled">
-                        {{#each headers}}
-                            <li><strong>{{key}}:</strong> {{value}}</li>
-                        {{/each}}
-                        </ul>
+                        {{> key-value context=headers }}
                     </td>
                 </tr>
             </tbody>

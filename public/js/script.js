@@ -1,11 +1,11 @@
 $(document).ready(function () {
-    function showHideAlert() {
+    function showHideAlert(seconds = 2000) {
         const alert = $("#success-alert"); 
         toggleAlertClasses(alert);
 
         setTimeout(function() { 
             toggleAlertClasses(alert);
-        }, 1500);
+        }, seconds);
     }
 
     function toggleAlertClasses(alert) {
