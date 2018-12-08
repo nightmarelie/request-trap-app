@@ -1,0 +1,24 @@
+.badge.GET {
+    color: #fff;
+    background-color: #28a745;
+}
+.badge.POST {
+    color: #fff;
+    background-color: #ffc107;
+}
+.badge.DELETE {
+    color: #fff;
+    background-color:#dc3545;
+}
+.badge.PATCH {
+    color: #fff;
+    background-color: #6c757d;
+}
+.badge.PUT {
+    color: #fff;
+    background-color: #007bff;
+}
+.badge.HEAD {
+    color: #fff;
+    background-color: #17a2b8;
+}

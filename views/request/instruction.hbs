@@ -4,7 +4,33 @@
 
 {{#contentFor 'pageScripts'}}
     <script>
-        // TODO: add handler
+        $(document).ready(function () {
+            const requests = new Set($('.list-group-item a').map(function () {
+                return $(this).text();
+            }).get());
+
+            const request = 'rest22'
+
+            if (requests.has(request)) {
+                updateRequest(request);
+            } else {
+                $("ul.list-group").prepend(createRequestItem(request));
+            }
+
+            function createRequestItem(request, count = 1) {
+                return $("<li />")
+                    .addClass("list-group-item d-flex justify-content-between align-items-center")
+                    .append([$("<a />", {
+                        id: request,
+                        href: `/${request}/requests`,
+                        text: request
+                    }), $("<span class=\"badge badge-dark\"></span>").text(count)])
+            }
+
+            function updateRequest(request) {
+                $(`#${request}`).parent('.list-group-item').find('.badge').text((i, oldval) => ++oldval);
+            }
+        });
     </script>
 {{/contentFor}}
 

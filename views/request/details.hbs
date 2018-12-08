@@ -14,30 +14,6 @@
         .table-condensed {
             font-size: 14px;
         }
-        .badge.GET {
-            color: #fff;
-            background-color: #28a745;
-        }
-        .badge.POST {
-            color: #fff;
-            background-color: #ffc107;
-        }
-        .badge.DELETE {
-            color: #fff;
-            background-color:#dc3545;
-        }
-        .badge.PATCH {
-            color: #fff;
-            background-color: #6c757d;
-        }
-        .badge.PUT {
-            color: #fff;
-            background-color: #007bff;
-        }
-        .badge.HEAD {
-            color: #fff;
-            background-color: #17a2b8;
-        }
     </style>
 {{/contentFor}}
 
@@ -46,12 +22,6 @@
         <h1>Request: "{{trap}}"</h1>
         {{#each requests}}
         <table class="table table-bordered table-dark table-condensed">
-            <thead>
-                <tr>
-                    <th scope="col">Key</th>
-                    <th scope="col">Value</th>
-                </tr>
-            </thead>
             <tbody>
                 <tr>
                     <td>Request date</td>
