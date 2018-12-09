@@ -9,14 +9,27 @@
                 return $(this).text();
             }).get());
 
-            const request = 'rest22'
+            const socket = io();
 
-            if (requests.has(request)) {
-                updateRequest(request);
-            } else {
-                $("ul.list-group").prepend(createRequestItem(request));
+            socket.on('requests', function(request) {
+                handleRequest(request);
+                showHideAlert();
+            });
+
+            function handleRequest(request) {
+                const {trapId} = request;
+                
+                if (!trapId) {
+                    return;
+                }
+
+                if (requests.has(trapId)) {
+                    updateRequest(trapId);
+                } else {
+                    $("ul.list-group").prepend(createRequestItem(trapId));
+                }
             }
-
+            
             function createRequestItem(request, count = 1) {
                 return $("<li />")
                     .addClass("list-group-item d-flex justify-content-between align-items-center")

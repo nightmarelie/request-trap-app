@@ -6,7 +6,8 @@
 {{#contentFor 'pageScripts'}}
     <script>
         $(document).ready(function () {
-            const mapRequest = new Map([
+            const socket = io();
+            const mapHeaderRequest = new Map([
                 ["date", "Request date"], 
                 ["ip", "Remote ip"],
                 ["method", "Request-method"],
@@ -17,6 +18,11 @@
                 ["headers", "Headers"]
             ]);
 
+            socket.on('{{trap}}', function(request) {
+                createRequest(request);
+                showHideAlert();
+            });
+
             function createRequest(request) {
                 $('div.request-container').find('h1').after(
                     $("<table />")
@@ -25,7 +31,11 @@
                         const trs = [];
 
                         for (let [key, value] of Object.entries(request)) {
-                            const keyTD = $("<td/ >").text(mapRequest.get(key));
+                            if (!mapHeaderRequest.has(key)) {
+                                continue;
+                            }
+
+                            const keyTD = $("<td/ >").text(mapHeaderRequest.get(key));
                             const valueTD = $("<td/ >");
                             
                             if (value instanceof Array) {

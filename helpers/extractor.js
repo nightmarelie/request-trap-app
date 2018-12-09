@@ -10,7 +10,7 @@ module.exports = req => {
         protocol: scheme, 
         url, 
         params, 
-        headers: { cookie: cookie }, 
+        headers: { cookie: cookie = '' }, 
         headers
     } = req;
 

@@ -1,7 +1,8 @@
 const express = require('express'),
-      router = express.Router()
-      extractor = require('../helpers/extractor')
+      router = express.Router(),
+      extractor = require('../helpers/extractor'),
       requestModel = require('../models/request');
+let io;
 
 router.get('/', (req, res) => {
     requestModel.findAllRequests()
@@ -13,10 +14,12 @@ router.get('/', (req, res) => {
 });
 
 router.all('/:trap_id', (req, res) => {
+    const { params: { trap_id: trapId } } = req;
     const request = new requestModel(extractor(req));
     request.save()
         .then(result => {
-            console.log(result);
+            io.emit('requests', result);
+            io.emit(trapId, result);
             res.sendStatus(200);
         })
         .catch(err => res.status(500).send(err.message));
@@ -34,4 +37,7 @@ router.get('/:trap_id/requests', (req, res) => {
         .catch(err => res.end(err.message));
 });
 
-module.exports = router;
+module.exports = (socketIo) => {
+    io = socketIo;
+    return router;
+};
