@@ -5,8 +5,11 @@ const express = require('express'),
       linkHelper = require('./views/helpers/link')(hbs),
       http = require('http').Server(app),
       io = require('socket.io')(http),
-      mongoose = require('./db'),
+      mongoose = require('mongoose'),
       config = require('config');
+
+mongoose.connect(config.uris, { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -20,7 +23,7 @@ app.engine('hbs', hbs.express4({
 app.set('view engine', 'hbs');
 app.set('views', relative(__dirname, 'views'));
 
-if (config.util.getEnv('NODE_ENV') == 'dev') {
+if (config.util.getEnv('NODE_ENV') !== 'test') {
     io.on('connection', function(socket) {
         console.log('Client connected');
         socket.on('disconnect', function(){
