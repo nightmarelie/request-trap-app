@@ -46,7 +46,7 @@
                                     return lis;
                                 }));
                             } else if (key === 'method') {
-                                valueTD.append($("<span />").addClass(`badge ${value}`).text(value))
+                                valueTD.append($("<span />").addClass(`badge badge-secondary ${value}`).text(value))
                             } else {
                                 valueTD.text(value);
                             }
@@ -56,7 +56,7 @@
 
                         return trs;
                     }))
-                );
+                ).hide().show("fast");
             }
         });
     </script>
@@ -80,7 +80,7 @@
                 {{> request-tr key="Remote ip" value=ip}}
                 <tr>
                     <td>Request-method</td>
-                    <td><span class="badge {{method}}">{{method}}</span></td>
+                    <td><span class="badge badge-secondary {{method}}">{{method}}</span></td>
                 </tr>
                 {{> request-tr key="Scheme" value=scheme}}
                 {{> request-tr key="Query-string" value=query}}

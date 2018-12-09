@@ -26,10 +26,10 @@
                 if (requests.has(trapId)) {
                     updateRequest(trapId);
                 } else {
-                    $("ul.list-group").prepend(createRequestItem(trapId));
+                    $("ul.list-group").prepend(createRequestItem(trapId).hide().show('fast'));
                 }
             }
-            
+
             function createRequestItem(request, count = 1) {
                 return $("<li />")
                     .addClass("list-group-item d-flex justify-content-between align-items-center")
