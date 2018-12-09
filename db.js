@@ -1,5 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+      config = require('config');
 
-mongoose.connect('mongodb://localhost:27017/request-trap', { useNewUrlParser: true });
+mongoose.connect(config.uris, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
+
 module.exports = mongoose;

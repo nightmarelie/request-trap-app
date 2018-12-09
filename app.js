@@ -1,11 +1,15 @@
 const express = require('express'),
       app = express(),
-      port = 3000,
       hbs = require('express-hbs');
       relative = require('./helpers/relative'),
       linkHelper = require('./views/helpers/link')(hbs),
       http = require('http').Server(app),
-      io = require('socket.io')(http);
+      io = require('socket.io')(http),
+      mongoose = require('./db'),
+      config = require('config');
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
 hbs.registerHelper('link', linkHelper);
 
@@ -16,16 +20,20 @@ app.engine('hbs', hbs.express4({
 app.set('view engine', 'hbs');
 app.set('views', relative(__dirname, 'views'));
 
-io.on('connection', function(socket) {
-    console.log('Client connected');
-    socket.on('disconnect', function(){
-        console.log('Client disconnected');
+if (config.util.getEnv('NODE_ENV') == 'dev') {
+    io.on('connection', function(socket) {
+        console.log('Client connected');
+        socket.on('disconnect', function(){
+            console.log('Client disconnected');
+        });
     });
-});
+}
 
 app.use(express.static(relative(__dirname, 'public')));
 app.use(require(relative(__dirname, 'middlewares/request-time')));
 app.use(require(relative(__dirname, 'middlewares/ignore-favicon')));
 app.use(require(relative(__dirname, 'controllers/requests'))(io));
 
-http.listen(port, () => console.log('Capture request!'));
+http.listen(config.port, () => console.log('Capture request!'));
+
+module.exports = app; // for test purpose

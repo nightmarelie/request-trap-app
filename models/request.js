@@ -1,6 +1,6 @@
-const db = require('../db');
+const mongoose = require('mongoose');
 
-const requestSchema = new db.Schema({
+const requestSchema = new mongoose.Schema({
     trapId: String,
     date: { 
         type: Date, 
@@ -31,4 +31,4 @@ requestSchema.statics.findAllRequests = function(cb) {
     .exec();
 };
 
-module.exports = db.model('request', requestSchema);
+module.exports = mongoose.model('request', requestSchema);
