@@ -6,9 +6,11 @@ const express = require('express'),
       http = require('http').Server(app),
       io = require('socket.io')(http),
       mongoose = require('mongoose'),
-      config = require('config');
+      config = require('config'),
+      uris = process.env.MONGODB_URI || config.uris,
+      port = process.env.PORT || config.port;
 
-mongoose.connect(config.uris, { useNewUrlParser: true });
+mongoose.connect(uris, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 
 const db = mongoose.connection;
@@ -37,6 +39,6 @@ app.use(require(relative(__dirname, 'middlewares/request-time')));
 app.use(require(relative(__dirname, 'middlewares/ignore-favicon')));
 app.use(require(relative(__dirname, 'controllers/requests'))(io));
 
-http.listen(config.port, () => console.log('Capture request!'));
+http.listen(port, () => console.log('Capture request!'));
 
 module.exports = app; // for test purpose

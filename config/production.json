@@ -1,4 +1,0 @@
-{
-    "uris": "mongodb://localhost:27017/request-trap",
-    "port": 3000
-}
