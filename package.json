@@ -1,6 +1,6 @@
 {
   "name": "request-trap-app",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A tool for capture and display HTTP requests.",
   "main": "app.js",
   "scripts": {

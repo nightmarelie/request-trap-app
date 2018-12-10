@@ -1,10 +1,9 @@
 $(document).ready(function () {
-    const requests = new Set($('.list-group-item a').map(function () {
-        return $(this).text();
-    }).get());
-
     function handleRequest(request) {
         const {trapId} = request;
+        const requests = new Set($('.list-group-item a').map(function () {
+            return $(this).text();
+        }).get());
         
         if (!trapId) {
             return;
